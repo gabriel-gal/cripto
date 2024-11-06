@@ -4,6 +4,7 @@ import { CartesianGrid, Line, LineChart, XAxis, Tooltip, YAxis } from "recharts"
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import { getGraficoCripto } from "@/controllers/Cripto"
 import { useFormatX } from "./hooks/useFormatX"
+import CustomTool from "./hooks/useCustomTool"
 import { useEffect, useState } from "react"
 
 const chartConfig = {
@@ -89,7 +90,7 @@ export default function Grafico({ id }: IGraficoProps) {
                                 }).format(value)
                             }
                         />
-                        <Tooltip content={<ChartTooltipContent hideLabel />} />
+                        <Tooltip content={<CustomTool />} />
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}

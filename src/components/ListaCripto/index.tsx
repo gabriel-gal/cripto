@@ -12,7 +12,7 @@ export default function ListaCripto() {
     }, [])
 
     return (
-        <div className="grid content-start gap-2 overflow-y-auto p-3 bg-slate-100 text-slate-950 rounded-3xl">
+        <div className="grid content-start gap-2 overflow-y-auto scrollbar-thumb-gray-200 p-3 bg-slate-100 text-slate-950 rounded-3xl">
             <div className="font-extrabold py-1 pr-0 pl-3 border-b-2 border-b-black"
                 style={{ display: 'grid', gridTemplateColumns: '50px 1fr 1fr 1fr 1fr' }}>
                 <span></span>
