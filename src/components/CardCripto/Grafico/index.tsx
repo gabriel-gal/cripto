@@ -1,13 +1,11 @@
-"use client"
-import { CartesianGrid, Line, LineChart, XAxis, Tooltip } from "recharts"
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartConfig, ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
+import { CartesianGrid, Line, LineChart, XAxis, Tooltip, YAxis } from "recharts"
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import { getGraficoCripto } from "@/controllers/Cripto"
+import { useFormatX } from "./hooks/useFormatX"
 import { useEffect, useState } from "react"
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material"
-import Grid from '@mui/material/Grid2';
 
-// Removendo o chartData estático, pois agora vamos usar os dados dinâmicos
 const chartConfig = {
     desktop: {
         label: "Desktop",
@@ -15,39 +13,32 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
-interface ComponentProps {
-    test?: string; 
-}
+interface IGraficoProps { id?: string }
 
-export default function Component({test} : ComponentProps) {
+export default function Grafico({ id }: IGraficoProps) {
+
     const [data, setData] = useState([])
     const [day, setDay] = useState<string>("1")
 
+    const handleChange = (event: any) => { setDay(event.target.value) }
+    useEffect(() => { fetchData(day) }, [day, id])
+
     const fetchData = async (thisDay: string) => {
-        const resp = await getGraficoCripto(test || "bitcoin", thisDay)
-        const transformedData = resp.map((array) => ({
+        const resp = await getGraficoCripto(id || "bitcoin", thisDay)
+        const transformedData = resp.map((array: any) => ({
             date: new Date(array[0]),
             priceClose: array[4]
         }));
         setData(transformedData)
     }
 
-    useEffect(() => {
-        fetchData(day)
-    }, [day, test])
-
-
-    const handleChange = (event: any) => { setDay(event.target.value) }
-
     return (
         <Card>
-            <CardHeader className="flex flex-row w-full items-center justify-between">
-
+            <CardHeader className="pt-2 flex flex-row w-full items-center justify-between">
                 <div>
-                    <CardTitle>Line Chart</CardTitle>
-                    <CardDescription>January - June 2024</CardDescription>
+                    <CardTitle>Gráfico da Cripto</CardTitle>
+                    <CardDescription>{day === "1" ? "há 1 dia atrás" : `há ${day} dias atrás`}</CardDescription>
                 </div>
-
                 <FormControl className="w-36">
                     <InputLabel id="demo-simple-select-label">Dias atrás</InputLabel>
                     <Select
@@ -66,9 +57,7 @@ export default function Component({test} : ComponentProps) {
                         <MenuItem value={"365"}>365</MenuItem>
                     </Select>
                 </FormControl>
-
-
-            </CardHeader >
+            </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
                     <LineChart
@@ -78,15 +67,33 @@ export default function Component({test} : ComponentProps) {
                             right: 12,
                         }}
                     >
-                        <CartesianGrid vertical={false} />
+                        <CartesianGrid stroke="#b4b4b4" vertical={false} />
                         <XAxis
                             dataKey="date"
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
-                        //tickFormatter={(value) => value.slice(0, 3)} // Se necessário, ajuste o formato do tick
+                            tickFormatter={(date) => useFormatX(date, day)}
+                        />
+                        <YAxis
+                            dataKey="priceClose"
+                            tickLine={false}
+                            axisLine={false}
+                            width={80}
+                            tickMargin={8}
+                            domain={['auto', 'auto']}
+                            tickFormatter={(value) =>
+                                new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format(value)
+                            }
                         />
                         <Tooltip content={<ChartTooltipContent hideLabel />} />
+                        <ChartTooltip
+                            cursor={false}
+                            content={<ChartTooltipContent hideLabel />}
+                        />
                         <Line
                             dataKey="priceClose"
                             type="natural"

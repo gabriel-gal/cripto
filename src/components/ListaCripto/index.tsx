@@ -1,13 +1,14 @@
+import { useCripto } from "@/contexts/CriptoContext";
 import ItemCripto from "./item-cripto";
 import { useEffect } from "react";
-import { useCripto } from "@/contexts/CriptoContext";
 
 export default function ListaCripto() {
 
-    const { allCripto, buscarAllCripto } = useCripto()
+    const { allCripto, buscarAllCripto, buscarCripto } = useCripto()
 
     useEffect(() => {
         buscarAllCripto()
+        buscarCripto("bitcoin")
     }, [])
 
     return (
@@ -17,8 +18,8 @@ export default function ListaCripto() {
                 <span></span>
                 <span>Nome</span>
                 <span>Preço</span>
-                <span>Alta 24h</span>
-                <span>Baixa 24h</span>
+                <span><span className="text-green-700 text-lg font-black">&uarr;</span> 24h</span>
+                <span><span className="text-red-700 text-lg font-black">&darr;</span>  24h</span>
             </div>
 
             {allCripto?.map((produto) => (
