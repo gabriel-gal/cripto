@@ -37,10 +37,10 @@ export default function Grafico({ id }: IGraficoProps) {
         <Card>
             <CardHeader className="pt-2 flex flex-row w-full items-center justify-between">
                 <div>
-                    <CardTitle>Gráfico da Cripto</CardTitle>
+                    <CardTitle className="text-xs md:text-base">Gráfico da Cripto</CardTitle>
                     <CardDescription>{day === "1" ? "há 1 dia atrás" : `há ${day} dias atrás`}</CardDescription>
                 </div>
-                <FormControl className="w-36">
+                <FormControl className="w-24 md:w-36">
                     <InputLabel id="demo-simple-select-label">Dias atrás</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"

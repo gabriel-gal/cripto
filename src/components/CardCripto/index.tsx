@@ -10,13 +10,13 @@ export default function CardCripto() {
     return (
         <div>
             <header className="flex items-center justify-between gap-3 text-white mb-2">
-                <div className="flex items-center gap-3">
-                    <img className="w-20 h-20 rounded-full" src={data?.image} />
-                    <p className="text-3xl">{data?.name}</p>
-                    <p className="text-2xl">({data?.symbol})</p>
+                <div className="flex items-center gap-1 md:gap-3">
+                    <img className="w-10 h-10 md:w-20 md:h-20 rounded-full" src={data?.image} />
+                    <p className="text-xl lg:text-3xl">{data?.name}</p>
+                    <p className="text-lg lg:text-2xl">({data?.symbol})</p>
                 </div>
                 <div>
-                    <p className="text-3xl">
+                    <p className="text-lg md:text-lg lg:text-2xl xl:text-3xl">
                         {data?.current_price.toLocaleString("pt-BR", {
                             style: "currency",
                             currency: "BRL",

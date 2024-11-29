@@ -16,15 +16,15 @@ export default function ItemCripto(props: ICardCripto) {
 
     return (
         <div
-            className="py-1 pr-0 pl-3 items-center cursor-pointer border-b-2 border-b-slate-300"
-            style={{ display: 'grid', gridTemplateColumns: '50px 1fr 1fr 1fr 1fr' }}
+            className="py-1 pr-0 pl-3 items-center cursor-pointer border-b-2 border-b-slate-300 
+        grid grid-cols-[30px_1fr_1fr_1fr_1fr] md:grid-cols-[50px_1fr_1fr_1fr_1fr] text-xs md:text-base"
             onClick={handleClick}
         >
-            <img className="w-8 h-8 rounded-md" src={props.image} alt={props.name} />
+            <img className="h-5 w-5 md:w-8 md:h-8 rounded-md" src={props.image} alt={props.name} />
             <span>{props.name}</span>
             <span>R$ {props.price.toLocaleString("pt-BR")}</span>
             <span>R$ {props.high_24h.toLocaleString("pt-BR")}</span>
-            <span>R$ {props.low_24h.toLocaleString("pt-BR")}</span>
+            <span className="">R$ {props.low_24h.toLocaleString("pt-BR")}</span>
         </div>
     );
 }
